@@ -5,10 +5,73 @@ from Keyboards.client_kb import kb_client, kb_client_menu, kb_client_na_meste, k
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
-class FSMAdmin (StatesGroup):
-    login = State()
-    password = State()
+# class FSMAdmin (StatesGroup):
+#     login = State()
+#     password = State()
+class Admin:
+    def __init__(self, login, password):
+        self.login=login
+        self.password=password
 
+        keys = ['login', 'password']
+        for key in keys:
+            self.keys = None
+
+########
+
+async def authorization(func):
+    async def wrapper():
+        print("\nАвторизация!")
+        Admin = "Admin"
+        login = []
+        func()
+        await bot.send_message(message.from_user.id,'Введите ваш логин: ', 'Введите ваш пароль: ')
+        while True:
+            for el in bot.send_message:
+                while True:
+                    my_txt = input(el)
+                    if " " in  my_txt or len(my_txt) == 0 or len(my_txt) > 10:
+                        print("-Логин и пароль не должны содержать ' '."
+                              "\n-Длина логина и пароля не может быть равна 0 символов"
+                              "\nи не должна превышать длину в 10 символов.")
+                    else:
+                        login.append(my_txt)
+                        break
+            a = False
+            #a_name_user = ""
+            b = False
+            a_admin = False
+            b_admin = False
+            count = 0
+            for el in login:
+                count += 1
+                if el in login and count == 1:
+                     # a = True
+                     # a_name_user = el
+                    if el == login:
+                        a_admin = True
+                if el in Admin password and count == 2:
+                    b = True
+                    if el == password:
+                        b_admin = True
+            if a_admin and b_admin:
+                print("Вы вошли как администратор!")
+                user = "administrator"
+                break
+            elif a and b:
+                print("Вы вошли!")
+                user = a_name_user
+                break
+            else:
+                print("Вы ввели неправильный логин или пароль!"
+                      "\nПопробуйте ещё раз!")
+                log_in.clear()
+        print("Авторизация прошла успешно!")
+        return user
+    return wrapper
+
+
+######
 
 
 # @dp.message_handler(commands=['start']) # научим бота реагировать на комманду старт, можно прописать хэлп
